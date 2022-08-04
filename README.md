@@ -41,7 +41,7 @@ async function* inputGenerator(value) {
 
 const input = inputGenerator(2);
 
-const generator = createAsyncGenerator(input());
+const generator = createAsyncGenerator(input);
 
 for await (const output of generator()) {
   console.log(output); //=> 4, 6, 8
@@ -189,7 +189,7 @@ for await (const output of generator(2)) {
 ```js
 import { pipe, filter } from 'create-async-generator';
 
-async function* inputGenerator(value) {
+async function* inputGenerator() {
   yield 2;
   yield 3;
   yield 4;
@@ -202,7 +202,7 @@ const generator = pipe(
   filter((value, i) => value % 2 === 0),
 );
 
-for await (const output of generator(2)) {
+for await (const output of generator()) {
   console.log(output); //=> 2, 4, 6 
 }
 ```
