@@ -10,7 +10,7 @@ Create an async generator out of any value and pipe async generators into each o
 ## Installation
 
 ```
-npm i async-generator
+npm i create-async-generator
 ```
 
 ## creatAsyncGenerator usage
@@ -18,7 +18,7 @@ npm i async-generator
 Passing a promise converts it into an async generator that will yield the promise result
 
 ```js
-import { createAsyncGenerator } from 'async-generator.js';
+import { createAsyncGenerator } from 'create-async-generator';
 
 const input = Promise.resolve(1);
 const generator = createAsyncGenerator(input);
@@ -31,7 +31,7 @@ for await (const output of generator()) {
 Passing an async iterable will yield all of its values
 
 ```js
-import { createAsyncGenerator } from 'async-generator';
+import { createAsyncGenerator } from 'create-async-generator';
 
 async function* inputGenerator(value) {
   yield value * 2;
@@ -51,7 +51,7 @@ for await (const output of generator()) {
 Passed methods (including (async) generators) will be called with the generator arguments
 
 ```js
-import { createAsyncGenerator } from 'async-generator';
+import { createAsyncGenerator } from 'create-async-generator';
 
 async function* inputGenerator(value) {
   // value will be the generator argument
@@ -70,7 +70,7 @@ for await (const output of generator(2)) {
 Any argument that is not a method, promise or async iterable will return a generator that will yield the same value
 
 ```js
-import { createAsyncGenerator } from 'async-generator';
+import { createAsyncGenerator } from 'create-async-generator';
 
 const input = 1;
 const generator = createAsyncGenerator(input);
@@ -83,7 +83,7 @@ for await (const output of generator()) {
 All output is flattened by default, so nesting promises, async iterables and methods will all result in a generator that yields all output values
 
 ```js
-import { createAsyncGenerator } from 'async-generator';
+import { createAsyncGenerator } from 'create-async-generator';
 
 async function* inputGenerator(value) {
   // innerValue and value will be the generator argument
@@ -109,7 +109,7 @@ The first argument is passed to `createAsyncGenerator` to convert the value to a
 All other arguments are operators that get passed the resulting async iterable.
 
 ```js
-import { pipe } from 'async-generator';
+import { pipe } from 'create-async-generator';
 
 async function* inputGenerator(value) {
   yield value * 2;
@@ -131,7 +131,7 @@ for await (const output of generator(2)) {
 Because the output of the methods is passed to `createAsyncGenerator` and called with the generator arguments it is possible to return methods, (async) generators or plain values that will be converted into async iterables
 
 ```js
-import { pipe } from 'async-generator';
+import { pipe } from 'create-async-generator';
 
 async function* inputGenerator(value) {
   yield value * 2;
@@ -168,7 +168,7 @@ for await (const output of generator(2)) {
 This library provides two default operators, `map` and `filter`, both take a predicate method that will get the yielded value and an index as arguments
 
 ```js
-import { pipe, map } from 'async-generator';
+import { pipe, map } from 'create-async-generator';
 
 async function* inputGenerator(value) {
   yield value * 2;
@@ -187,7 +187,7 @@ for await (const output of generator(2)) {
 ```
 
 ```js
-import { pipe, filter } from 'async-generator';
+import { pipe, filter } from 'create-async-generator';
 
 async function* inputGenerator(value) {
   yield 2;

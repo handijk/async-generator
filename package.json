@@ -1,5 +1,5 @@
 {
-  "name": "async-generator",
+  "name": "create-async-generator",
   "version": "1.0.0",
   "description": "Create an async generator out of any value and pipe async generators into each other",
   "main": "index.js",
