@@ -3,8 +3,8 @@
 Create an async generator out of any value and pipe async generators into each other.
 
 * [Installation](#installation)
-* [createAsyncGenerator usage](#createAsyncgenerator usage)
-* [pipe usage](#pipe usage)
+* [createAsyncGenerator usage](#createAsyncgenerator)
+* [pipe usage](#pipe)
 * [Operators](#operators)
 
 ## Installation
