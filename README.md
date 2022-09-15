@@ -166,6 +166,12 @@ for await (const output of generator(2)) {
 
 ## Combination usage
 
+Make sure to install `async-iterators-combine` first.
+
+```
+npm i async-iterators-combine 
+```
+
 All combinator methods (`all`/`race`/`combineLatest`) take an iterable of items as the first argument that will be passed to `createAsyncGenerator` and combined into a single async generator using [async-iterators-combine](https://github.com/handijk/async-iterators-combine), allowing for an options object as the second argument.
 
 ## Operators
