@@ -1,10 +1,11 @@
-# async-generator
+# create-async-generator
 
 Create an async generator out of any value and pipe async generators into each other.
 
 * [Installation](#installation)
 * [createAsyncGenerator usage](#createAsyncgenerator)
 * [pipe usage](#pipe)
+* [race/all/combineLatest usage](#combination)
 * [Operators](#operators)
 
 ## Installation
@@ -162,6 +163,10 @@ for await (const output of generator(2)) {
   console.log(output); //=> 8, 12, 16, 12, 18, 24, 16, 24, 32
 }
 ```
+
+## Combination usage
+
+All combinator methods (`all`/`race`/`combineLatest`) take an iterable of items as the first argument that will be passed to `createAsyncGenerator` and combined into a single async generator using [async-iterators-combine](https://github.com/handijk/async-iterators-combine), allowing for an options object as the second argument.
 
 ## Operators
 
