@@ -1,4 +1,4 @@
-import { jest, test, expect, describe } from '@jest/globals';
+import { vi, test, expect, describe } from 'vitest';
 import { map } from './map.js';
 
 describe('map operator', () => {
@@ -9,7 +9,7 @@ describe('map operator', () => {
   }
 
   test('the async iterable is mapped to a new value by the predicate method', async () => {
-    const spy = jest.fn((input) => input % 2 === 0);
+    const spy = vi.fn((input) => input % 2 === 0);
     const generator = map(spy);
     const input = createAsyncIterable();
     const iterable = generator(input);

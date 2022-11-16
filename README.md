@@ -173,6 +173,7 @@ npm i async-iterators-combine
 ```
 
 All combinator methods (`all`/`race`/`combineLatest`) take an iterable of items as the first argument that will be passed to `createAsyncGenerator` and combined into a single async generator using [async-iterators-combine](https://github.com/handijk/async-iterators-combine), allowing for an options object as the second argument.
+The options object can be extended with a `flatten` property that will indicate how many times the combinator method will be called recursively on the result if it would contain one or more iterable values in the result, additionaly a `depth` property should be provided to indicate how deep the iterables should be flattened before re-running the combinator method.
 
 ## Operators
 

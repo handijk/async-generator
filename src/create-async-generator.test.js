@@ -1,4 +1,4 @@
-import { describe, jest, test, expect } from '@jest/globals';
+import { describe, vi, test, expect } from 'vitest';
 import { createAsyncGenerator } from './create-async-generator';
 
 describe('createAsyncGenerator', () => {
@@ -29,7 +29,7 @@ describe('createAsyncGenerator', () => {
   });
 
   test('a method as input', async () => {
-    const input = jest.fn(() => 1);
+    const input = vi.fn(() => 1);
     const x = {};
     const generator = createAsyncGenerator(input);
     const iterable = generator(x);

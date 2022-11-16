@@ -1,39 +1,53 @@
-import { jest, test, expect, describe } from '@jest/globals';
+import { vi, test, expect, describe } from 'vitest';
+import { createAsyncGenerator } from './create-async-generator.js';
 import { pipe } from './pipe.js';
 
+vi.mock('./create-async-generator.js', () => ({
+  createAsyncGenerator: vi.fn(),
+}));
+
 describe('pipe', () => {
-  jest.mock('./create-async-generator.js', () => ({
-    createAsyncGenerator: (input) => input,
-  }));
-
-  async function* createAsyncIterable() {
-    yield 1;
-    yield 2;
-    yield 3;
-  }
-
   test('an async iterable as input', async () => {
-    const input = createAsyncIterable();
-    const fn1 = jest.fn(async function* (asyncIterable) {
-      for await (const value of asyncIterable) {
-        yield value;
-        yield value * 2;
-      }
+    const input = (async function* () {
+      yield 1;
+      yield 2;
+      yield 3;
+    })();
+    const fn1 = vi.fn();
+    const fn2 = vi.fn();
+    const fn1Result = Symbol('fn1 result');
+    const fn2Result = Symbol('fn2 result');
+    const mockGenerator1 = (async function* () {
+      yield 'kippekop';
+      yield 'varkensnek';
+    })();
+    const mockGenerator2 = (async function* () {
+      yield 'kippekop2';
+      yield 'varkensnek2';
+    })();
+    const args = [Symbol('arg1', Symbol('arg2'))];
+    const mockGeneratorFn1 = vi.fn(() => mockGenerator1);
+    const mockGeneratorFn2 = vi.fn(() => mockGenerator2);
+    createAsyncGenerator.mockReturnValueOnce(mockGeneratorFn1);
+    createAsyncGenerator.mockReturnValueOnce(mockGeneratorFn2);
+    fn1.mockReturnValueOnce(fn1Result);
+    fn2.mockReturnValueOnce(fn2Result);
+    const iterable = pipe(input, fn1, fn2)(...args);
+    expect(await iterable.next()).toEqual({ value: 'kippekop2', done: false });
+    expect(await iterable.next()).toEqual({
+      value: 'varkensnek2',
+      done: false,
     });
-    const iterable = pipe(input, fn1)();
-    const output1 = await iterable.next();
-    const output2 = await iterable.next();
-    const output3 = await iterable.next();
-    const output4 = await iterable.next();
-    const output5 = await iterable.next();
-    const output6 = await iterable.next();
-    const output7 = await iterable.next();
-    expect(output1.value).toEqual(1);
-    expect(output2.value).toEqual(2);
-    expect(output3.value).toEqual(2);
-    expect(output4.value).toEqual(4);
-    expect(output5.value).toEqual(3);
-    expect(output6.value).toEqual(6);
-    expect(output7.done).toEqual(true);
+    expect(await iterable.next()).toEqual({ value: undefined, done: true });
+    expect(fn1).not.toHaveBeenCalled();
+    expect(fn2).toHaveBeenCalledTimes(1);
+    expect(fn2).toHaveBeenCalledWith(mockGenerator1);
+    expect(createAsyncGenerator).toHaveBeenCalledTimes(2);
+    expect(createAsyncGenerator).toHaveBeenNthCalledWith(1, input);
+    expect(createAsyncGenerator).toHaveBeenNthCalledWith(2, fn2Result);
+    expect(mockGeneratorFn1).toHaveBeenCalledTimes(1);
+    expect(mockGeneratorFn1).toHaveBeenCalledWith(...args);
+    expect(mockGeneratorFn2).toHaveBeenCalledTimes(1);
+    expect(mockGeneratorFn2).toHaveBeenCalledWith(...args);
   });
 });

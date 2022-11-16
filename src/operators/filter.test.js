@@ -1,4 +1,4 @@
-import { jest, test, expect, describe } from '@jest/globals';
+import { vi, test, expect, describe } from 'vitest';
 import { filter } from './filter.js';
 
 describe('filter operator', () => {
@@ -9,7 +9,7 @@ describe('filter operator', () => {
   }
 
   test('the async iterable is filtered by the predicate method', async () => {
-    const spy = jest.fn((input) => input % 2 === 0);
+    const spy = vi.fn((input) => input % 2 === 0);
     const generator = filter(spy);
     const input = createAsyncIterable();
     const iterable = generator(input);
