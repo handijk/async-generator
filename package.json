@@ -1,8 +1,11 @@
 {
   "name": "create-async-generator",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Create an async generator out of any value or combination of values and pipe async generators into each other",
   "main": "src/index.js",
+  "exports": {
+    "./*": "./src/*"
+  },
   "type": "module",
   "scripts": {
     "format": "prettier --check \"**/*.{c,}js\"",

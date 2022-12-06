@@ -4,7 +4,7 @@ import { hasIterator } from './has-iterator.js';
 
 export const flattenOrNot =
   (generatorFn) =>
-  (iterable, { flatten, depth, ...options }) =>
+  (iterable, { flatten, depth, ...options } = {}) =>
     async function* (...x) {
       const generator = generatorFn(
         Array.from(iterable, (item) => createAsyncGenerator(item)(...x)),
