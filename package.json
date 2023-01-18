@@ -1,6 +1,6 @@
 {
   "name": "create-async-generator",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Create an async generator out of any value or combination of values and pipe async generators into each other",
   "main": "src/index.js",
   "type": "module",
